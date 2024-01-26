@@ -6,6 +6,10 @@ const app = express()
 app.use(express.json())
 
 // Route setup
+app.get('/', (req, res) => {
+  res.send('Express on Vercel')
+})
+
 app.use('/tickets', ticketRoutes)
 app.use('/github', githubRoutes)
 
