@@ -5,7 +5,6 @@ import ticketRoutes from './routes/ticketRoutes'
 const app = express()
 app.use(express.json())
 
-// Route setup
 app.get('/', (req, res) => {
   res.send('Express on Vercel')
 })
