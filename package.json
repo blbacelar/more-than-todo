@@ -6,7 +6,8 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "vercel-build": "echo deploying backend"
   },
   "keywords": [],
   "author": "",
