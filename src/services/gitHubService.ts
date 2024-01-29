@@ -1,5 +1,4 @@
 import { Octokit } from '@octokit/rest'
-import axios from 'axios'
 import dotenv from 'dotenv'
 
 dotenv.config()
@@ -17,17 +16,9 @@ interface PullRequest {
   state: string
 }
 
-const axiosInstance = axios.create({
-  baseURL: githubApiUrl,
-  headers: {
-    Accept: 'application/vnd.github.v3+json',
-    Authorization: `token ${githubToken}`
-  }
-})
-
 const octokit = new Octokit({
   auth: githubToken,
-  request: { fetch: axios }
+  request: { fetch }
 })
 
 const getOpenPullRequests = async () => {
