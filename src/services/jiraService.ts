@@ -7,12 +7,6 @@ const jiraApiToken: string = process.env.JIRA_API_TOKEN || ''
 const jiraUserEmail: string = process.env.JIRA_USER_EMAIL || ''
 const jiraBaseUrl: string = process.env.JIRA_BASE_URL || ''
 
-const authBuffer: string = Buffer.from(
-  `${jiraUserEmail}:${jiraApiToken}`
-).toString('base64')
-
-console.log(`AUTH => ${authBuffer}`)
-
 interface Issue {
   id: string
   key: string
@@ -26,8 +20,11 @@ const getAssignedTickets = async (): Promise<Issue[]> => {
     const response: AxiosResponse = await axios.get(
       `${jiraBaseUrl}/rest/api/3/search?jql=assignee='${jiraUserEmail}' AND statusCategory != "Done"`,
       {
+        auth: {
+          username: jiraUserEmail,
+          password: jiraApiToken
+        },
         headers: {
-          Authorization: `Basic ${authBuffer}`,
           'Content-Type': 'application/json'
         }
       }
