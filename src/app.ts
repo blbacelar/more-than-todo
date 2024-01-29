@@ -1,15 +1,9 @@
-const cors = require('cors')
 import express, { NextFunction, Request, Response } from 'express'
 import githubRoutes from './routes/githubRoutes'
 import ticketRoutes from './routes/ticketRoutes'
 
 const app = express()
 app.use(express.json())
-app.use(
-  cors({
-    origin: 'http://127.0.0.1:5173'
-  })
-)
 
 app.get('/', (req, res) => {
   res.send('Express on Vercel')
