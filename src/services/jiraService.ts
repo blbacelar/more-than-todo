@@ -11,6 +11,8 @@ const authBuffer: string = Buffer.from(
   `${jiraUserEmail}:${jiraApiToken}`
 ).toString('base64')
 
+console.log(`AUTH => ${authBuffer}`)
+
 interface Issue {
   id: string
   key: string
