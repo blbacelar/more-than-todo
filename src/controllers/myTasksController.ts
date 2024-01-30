@@ -4,10 +4,8 @@ import JiraService from '../services/jiraService'
 
 const getMyTasks = async (req: Request, res: Response) => {
   try {
-    const [pullRequests, tickets] = await Promise.all([
-      GitHubAxiosService.getOpenPullRequests(),
-      JiraService.getAssignedTickets()
-    ])
+    const pullRequests = await GitHubAxiosService.getOpenPullRequests()
+    const tickets = await JiraService.getAssignedTickets()
 
     if (pullRequests.length === 0 && tickets.length === 0) {
       return res
@@ -23,6 +21,8 @@ const getMyTasks = async (req: Request, res: Response) => {
         pullRequests
       }
     }
+
+    console.log(`DATA => ${JSON.stringify(data, null, 4)}`)
 
     return res.status(200).json({
       data
