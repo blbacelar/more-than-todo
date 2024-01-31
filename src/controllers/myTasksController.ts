@@ -1,11 +1,16 @@
 import { Request, Response } from 'express'
 import GitHubAxiosService from '../services/gitHubAxiosService'
+import GoogleCalendarService from '../services/googleService'
 import JiraService from '../services/jiraService'
 
 const getMyTasks = async (req: Request, res: Response) => {
   try {
     const pullRequests = await GitHubAxiosService.getOpenPullRequests()
     const tickets = await JiraService.getAssignedTickets()
+    const google = {
+      events: await GoogleCalendarService.getUpcomingEvents(),
+      calendarList: await GoogleCalendarService.getListOfCalendars()
+    }
 
     if (pullRequests.length === 0 && tickets.length === 0) {
       return res
@@ -19,7 +24,8 @@ const getMyTasks = async (req: Request, res: Response) => {
       },
       github: {
         pullRequests
-      }
+      },
+      google
     }
 
     console.log(`DATA => ${JSON.stringify(data, null, 4)}`)

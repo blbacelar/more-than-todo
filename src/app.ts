@@ -1,6 +1,7 @@
 const cors = require('cors')
 import express, { NextFunction, Request, Response } from 'express'
 import githubRoutes from './routes/githubRoutes'
+import googleRoutes from './routes/googleRoutes'
 import tasksRoutes from './routes/tasksRoutes'
 import ticketRoutes from './routes/ticketRoutes'
 
@@ -14,6 +15,7 @@ app.get('/', (req, res) => {
 
 app.use('/tickets', ticketRoutes)
 app.use('/github', githubRoutes)
+app.use('/google', googleRoutes)
 app.use('/api/v1', tasksRoutes)
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
