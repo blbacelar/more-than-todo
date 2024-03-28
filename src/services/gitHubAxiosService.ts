@@ -9,6 +9,23 @@ const githubApiUrl: string =
 const githubRepo = process.env.GITHUB_REPO as string
 const githubOwner = process.env.GITHUB_OWNER as string
 
+const MOCK_DATA: PullRequest[] = [
+  {
+    html_url: 'https://github.com/mock-user/mock-repo/pull/1',
+    state: 'open',
+    title: 'Mock PR Title 1',
+    created_at: '2023-01-01T00:00:00Z',
+    updated_at: '2023-01-01T00:00:00Z'
+  },
+  {
+    html_url: 'https://github.com/mock-user/mock-repo/pull/2',
+    state: 'open',
+    title: 'Mock PR Title 2',
+    created_at: '2023-02-01T00:00:00Z',
+    updated_at: '2023-02-01T00:00:00Z'
+  }
+]
+
 interface PullRequest {
   html_url: string
   state: string
@@ -26,6 +43,7 @@ const axiosInstance = axios.create({
 })
 
 const getOpenPullRequests = async (): Promise<PullRequest[]> => {
+  return MOCK_DATA
   try {
     const response = await axiosInstance.get<PullRequest[]>(
       `/repos/${githubOwner}/${githubRepo}/pulls?state=open`

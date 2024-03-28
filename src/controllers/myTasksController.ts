@@ -28,8 +28,6 @@ const getMyTasks = async (req: Request, res: Response) => {
       google
     }
 
-    console.log(`DATA => ${JSON.stringify(data, null, 4)}`)
-
     return res.status(200).json({
       data
     })
