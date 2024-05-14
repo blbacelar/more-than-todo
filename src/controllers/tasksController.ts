@@ -9,9 +9,9 @@ dotenv.config()
 
 const JIRA_URL = process.env.JIRA_BASE_URL
 
-export const getAllTasks = async (req: Request, res: Response) => {
+export const getCompletedTasks = async (req: Request, res: Response) => {
   try {
-    const tasks = await Task.find();
+    const tasks = await Task.find({ completed: true });
     res.json(tasks);
   } catch (error: any) {
     res.status(500).json({ message: error.message });
