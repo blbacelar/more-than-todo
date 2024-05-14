@@ -4,10 +4,13 @@ import githubRoutes from './routes/githubRoutes'
 import googleRoutes from './routes/googleRoutes'
 import tasksRoutes from './routes/tasksRoutes'
 import ticketRoutes from './routes/ticketRoutes'
+import connectDB from './utils/db'
 
 const app = express()
 app.use(express.json())
 app.use(cors())
+
+connectDB()
 
 app.get('/', (req, res) => {
   res.send('Express on Vercel')

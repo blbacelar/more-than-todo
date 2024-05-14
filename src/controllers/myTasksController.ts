@@ -1,9 +1,10 @@
-import { Request, Response } from 'express'
-import GitHubAxiosService from '../services/gitHubAxiosService'
-import GoogleCalendarService from '../services/googleService'
-import JiraService from '../services/jiraService'
+import { Request, Response } from 'express';
+import Task from '../models/Task';
+import GitHubAxiosService from '../services/gitHubAxiosService';
+import GoogleCalendarService from '../services/googleService';
+import JiraService from '../services/jiraService';
 
-const getMyTasks = async (req: Request, res: Response) => {
+export const getMyTasks = async (req: Request, res: Response) => {
   try {
     const pullRequests = await GitHubAxiosService.getOpenPullRequests()
     const tickets = await JiraService.getAssignedTickets()
@@ -40,6 +41,44 @@ const getMyTasks = async (req: Request, res: Response) => {
   }
 }
 
-export default {
-  getMyTasks
-}
+export const getAllTasks = async (req: Request, res: Response) => {
+  try {
+    const tasks = await Task.find();
+    res.json(tasks);
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const createTask = async (req: Request, res: Response) => {
+  try {
+    const { title, description } = req.body;
+    const newTask = new Task({
+      title,
+      description,
+      status: 'Open',
+    });
+
+    const savedTask = await newTask.save();
+    res.status(201).json(savedTask);
+  } catch (error: any) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+export const markTaskComplete = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const updatedTask = await Task.findByIdAndUpdate(
+      id,
+      { status: 'Complete' },
+      { new: true },
+    );
+    if (!updatedTask) {
+      return res.status(404).json({ message: 'Task not found' });
+    }
+    res.json(updatedTask);
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+};
