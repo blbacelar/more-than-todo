@@ -11,14 +11,16 @@ const githubOwner = process.env.GITHUB_OWNER as string
 
 const MOCK_DATA: PullRequest[] = [
   {
-    html_url: 'https://github.com/mock-user/mock-repo/pull/1',
+    id: '1',
+    url: 'https://github.com/mock-user/mock-repo/pull/1',
     state: 'open',
     title: 'Mock PR Title 1',
     created_at: '2023-01-01T00:00:00Z',
     updated_at: '2023-01-01T00:00:00Z'
   },
   {
-    html_url: 'https://github.com/mock-user/mock-repo/pull/2',
+    id: '2',
+    url: 'https://github.com/mock-user/mock-repo/pull/2',
     state: 'open',
     title: 'Mock PR Title 2',
     created_at: '2023-02-01T00:00:00Z',
@@ -27,7 +29,8 @@ const MOCK_DATA: PullRequest[] = [
 ]
 
 interface PullRequest {
-  html_url: string
+  id: string
+  url: string
   state: string
   title: string
   created_at: string
@@ -42,7 +45,7 @@ const axiosInstance = axios.create({
   }
 })
 
-const getOpenPullRequests = async (): Promise<PullRequest[]> => {
+export const getOpenPR = async (): Promise<PullRequest[]> => {
   return MOCK_DATA
   try {
     const response = await axiosInstance.get<PullRequest[]>(
@@ -50,7 +53,8 @@ const getOpenPullRequests = async (): Promise<PullRequest[]> => {
     )
 
     const pullRequests = response.data.map(pr => ({
-      html_url: pr.html_url,
+      id: pr.id,
+      url: pr.url,
       state: pr.state,
       title: pr.title,
       created_at: pr.created_at,
@@ -62,9 +66,3 @@ const getOpenPullRequests = async (): Promise<PullRequest[]> => {
     throw error
   }
 }
-
-const GitHubAxiosService = {
-  getOpenPullRequests
-}
-
-export default GitHubAxiosService

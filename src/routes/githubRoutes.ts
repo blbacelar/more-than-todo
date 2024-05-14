@@ -1,10 +1,10 @@
 // routes/githubRoutes.ts
 
 import express from 'express'
-import GitHubController from '../controllers/gitHubController'
+import { getOpenPullRequests } from '../controllers/gitHubController'
 
 const router = express.Router()
 
-router.get('/open-prs', GitHubController.getOpenPullRequests)
+router.get('/open-prs', getOpenPullRequests)
 
 export default router

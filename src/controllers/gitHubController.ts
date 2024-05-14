@@ -1,11 +1,11 @@
 // controllers/GitHubController.ts
 
 import { Request, Response } from 'express'
-import GitHubAxiosService from '../services/gitHubAxiosService'
+import { getOpenPR } from '../services/gitHubAxiosService'
 
-const getOpenPullRequests = async (req: Request, res: Response) => {
+export const getOpenPullRequests = async (req: Request, res: Response) => {
   try {
-    const pullRequests = await GitHubAxiosService.getOpenPullRequests()
+    const pullRequests = await getOpenPR()
     if (pullRequests.length === 0) {
       return res.status(404).json({ message: 'No open pull requests found' })
     }
@@ -16,8 +16,4 @@ const getOpenPullRequests = async (req: Request, res: Response) => {
     }
     return res.status(500).json({ message: error.message })
   }
-}
-
-export default {
-  getOpenPullRequests
 }

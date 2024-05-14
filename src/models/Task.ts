@@ -1,16 +1,26 @@
 import { Document, Schema, model } from 'mongoose';
 
 export interface ITask extends Document {
+  source: 'GitHub' | 'Jira';
+  sourceId: string;
   title: string;
-  description: string;
-  status: 'Open' | 'Complete';
+  completed: boolean;
+  status: string;
+  url?: string;
+  key?: string;
 }
 
 const taskSchema = new Schema({
+  source: { type: String, required: true, enum: ['GitHub', 'Jira'] },
+  sourceId: { type: String, required: true },
   title: { type: String, required: true },
-  description: { type: String, required: true },
-  status: { type: String, required: true, enum: ['Open', 'Complete'] },
+  status: { type: String },
+  completed: { type: Boolean, required: true, default: false },
+  url: { type: String },
+  key: { type: String },
 });
+
+taskSchema.index({ source: 1, sourceId: 1 }, { unique: true });
 
 const Task = model<ITask>('Task', taskSchema);
 
