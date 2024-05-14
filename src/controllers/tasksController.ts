@@ -63,6 +63,7 @@ export const fetchAndSaveTasks = async (req: Request, res: Response) => {
       title: pr.title,
       status: pr.state,
       url: pr.url,
+      key: pr.id,
     }));
 
     // Fetch Jira Tickets
