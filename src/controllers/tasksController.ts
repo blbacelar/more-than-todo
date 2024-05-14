@@ -39,8 +39,8 @@ export const markTaskComplete = async (req: Request, res: Response) => {
     const { id } = req.params;
     const updatedTask = await Task.findByIdAndUpdate(
       id,
-      { status: 'Complete' },
-      { new: true },
+      { completed: true, completedAt: new Date() },
+      { new: true }, // Retorna o documento atualizado
     );
     if (!updatedTask) {
       return res.status(404).json({ message: 'Task not found' });

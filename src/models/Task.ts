@@ -8,6 +8,8 @@ export interface ITask extends Document {
   status: string;
   url?: string;
   key?: string;
+  createdAt: Date;
+  completedAt?: Date;
 }
 
 const taskSchema = new Schema({
@@ -18,6 +20,8 @@ const taskSchema = new Schema({
   completed: { type: Boolean, required: true, default: false },
   url: { type: String },
   key: { type: String },
+  createdAt: { type: Date, default: Date.now },
+  completedAt: { type: Date },
 });
 
 taskSchema.index({ source: 1, sourceId: 1 }, { unique: true });
