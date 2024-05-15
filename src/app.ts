@@ -1,5 +1,6 @@
 const cors = require('cors')
 import express, { NextFunction, Request, Response } from 'express'
+import authRoutes from './routes/authRoutes'
 import githubRoutes from './routes/githubRoutes'
 import googleRoutes from './routes/googleRoutes'
 import tasksRoutes from './routes/tasksRoutes'
@@ -20,6 +21,7 @@ app.use('/tickets', ticketRoutes)
 app.use('/github', githubRoutes)
 app.use('/google', googleRoutes)
 app.use('/api/v1', tasksRoutes)
+app.use('/api/v1', authRoutes)
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   console.error(err)
